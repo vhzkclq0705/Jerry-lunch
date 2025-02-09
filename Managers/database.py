@@ -10,7 +10,10 @@ class Database:
         self.lunch_menus = self.select_data()
 
     def get_lunch_menus(self) -> list:
-        return self.lunch_menus
+        lunch_menus = self.select_data()
+        data = [vars(lunch_menu) for lunch_menu in lunch_menus]
+
+        return data
 
     def execute_query(self, query, data=None):
         if data:

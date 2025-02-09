@@ -8,11 +8,10 @@ class Statistics_manager:
         self.df = self.convert_to_df()
 
     def convert_to_df(self) -> pd.DataFrame:
-        lunch_menus = self.db.get_lunch_menus()
-        lunch_menus_dict = [vars(lunch_menu) for lunch_menu in lunch_menus]
+        data = self.db.get_lunch_menus()
 
         df = (
-            pd.DataFrame(lunch_menus_dict)
+            pd.DataFrame(data)
             .drop(columns=['id'])
             .groupby('member_name').size().reset_index(name='menu')
         )
