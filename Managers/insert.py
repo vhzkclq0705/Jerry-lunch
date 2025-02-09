@@ -1,4 +1,4 @@
-from Mocel.lunch_menu import LunchMenu
+from Model.lunch_menu import LunchMenu
 
 # Insert_manager
 class Insert_manager:
@@ -7,7 +7,7 @@ class Insert_manager:
         self.member_dict = db.get_member_dict()
 
     def get_members(self) -> list:
-        return list(member_dict.keys())
+        return list(self.member_dict.keys())
 
     def save_lunch_menu(self, menu_name: str, member_name: str, dt: str):
         member_id = member_dict[member_name]

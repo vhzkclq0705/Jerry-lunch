@@ -1,4 +1,4 @@
-from Managers import *
+from Managers import Database, Insert_manager
 import streamlit as st
 
 # --Managers--
@@ -29,4 +29,4 @@ if is_tapped_save_button:
     else:
         st.warning("모든 값을 입력해주세요.")
 
-st.on_event("shutdown", db.close_connection)
+db.close_connection()
