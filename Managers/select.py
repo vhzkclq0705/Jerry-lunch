@@ -12,7 +12,8 @@ class Select_manager:
         df = (
             pd.DataFrame(lunch_menus_dict)
             .drop(columns=['id'])
-            .sort_values(by='date', ascending=False)        
+            .sort_values(by='date', ascending=False)
+            .reset_index(drop=True)
         )
 
         return df
