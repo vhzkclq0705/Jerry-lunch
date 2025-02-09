@@ -12,20 +12,15 @@ class Database:
     def get_lunch_menus(self) -> list:
         return self.lunch_menus
 
-    def execute_query(self, query, params=None):
-        if params:
-            self.cursor.executemany(query, params)
+    def execute_query(self, query, data=None):
+        if data:
+            self.cursor.execute(query, data)
         else:
             self.cursor.execute(query)
         self.conn.commit()
-        self.close_connection()
 
-    def insert_data(self, data):
-        if isinstance(data, tuple):
-            data = [data]
-
-        data = [(menu_name.upper(), member_id, dt) for (menu_name, member_id, dt) in data]
-
+    def insert_data(self, lunch_menu: LunchMenu):
+        data = (lunch_menu.menu_name, lunch_menu.member_id, lunch_menu.date)
         query = '''
         INSERT INTO lunch_menu (menu_name, member_id, dt)
         VALUES (%s, %s, %s)
