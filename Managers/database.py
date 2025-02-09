@@ -55,7 +55,7 @@ class Database:
         self.execute_query(query)
 
         results = self.cursor.fetchall()
-        lunch_menus = [LunchMenu(menu_name=row[0], member_name=row[1], date=row[2]) for row in results]
+        lunch_menus = [LunchMenu(menu_name=row[1], member_name=row[2], date=row[3], id=row[0]) for row in results]
 
         return lunch_menus
 
