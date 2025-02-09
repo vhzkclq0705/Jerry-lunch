@@ -1,20 +1,31 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 
 # Statistics_manager
 class Statistics_manager:
-    def __init__(self, data):
-        self.data = data
-        self.initial_df = pd.DataFrame(data, columns=['menu_name', 'member_name', 'date'])
+    def __init__(self, db):
+        self.db = db
+        self.df = self.convert_to_df()
 
-    def get_initial_df(self) -> pd.DataFrame:
-        return self.initial_df.sort_values(by='date', ascending=False)
+    def convert_to_df(self) -> pd.DataFrame:
+        lunch_menus = self.db.get_lunch_menus()
+        lunch_menus_dict = [vars(lunch_menu) for lunch_menu in lunch_menus]
 
-    def get_grouped_df(self) -> pd.DataFrame:
-        melted_df = self.initial_df.melt(
-            id_vars=['member_name'],
-            value_vars=['date'],
-            value_name='menu'
+        df = (
+            pd.DataFrame(lunch_menus_dict)
+            .drop(columns=['id'])
+            .groupby('member_name').size().reset_index(name='menu')
         )
 
-        grouped_df = self.melted_df.groupby('member_name')['menu'].count().reset_index()
-        return grouped_df
+        return df
+   
+    def get_table(self) -> pd.DataFrame:
+        return self.df
+    
+    def get_chart(self):
+        if self.df.empty:
+            return None
+        fig, ax = plt.subplots()
+        self.df.plot(x='member_name', y='menu', kind='bar', ax=ax)
+        ax.set_xticklabels(self.df['member_name'], rotation=45)
+        return fig
