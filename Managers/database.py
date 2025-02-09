@@ -1,11 +1,16 @@
 import psycopg
 from config.db_config import db_config
+from Model.lunch_menu import LunchMenu
 
 # Database
 class Database:
     def __init__(self):
         self.conn = psycopg.connect(**db_config)
         self.cursor = self.conn.cursor()
+        self.lunch_menus = self.select_data()
+
+    def get_lunch_menus(self) -> list:
+        return self.lunch_menus
 
     def execute_query(self, query, params=None):
         if params:
@@ -13,6 +18,7 @@ class Database:
         else:
             self.cursor.execute(query)
         self.conn.commit()
+        self.close_connection()
 
     def insert_data(self, data):
         if isinstance(data, tuple):
@@ -44,6 +50,7 @@ class Database:
     def select_data(self) -> list:
         query = '''
         SELECT
+            l.id,
             menu_name,
             name,
             dt
@@ -51,7 +58,11 @@ class Database:
         JOIN member m ON l.member_id = m.id
         '''
         self.execute_query(query)
-        return self.cursor.fetchall()
+
+        results = self.cursor.fetchall()
+        lunch_menus = [LunchMenu(menu_name=row[0], member_name=row[1], date=row[2]) for row in results]
+
+        return lunch_menus
 
     # TODO
     def delete_data(self):
