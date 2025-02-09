@@ -10,7 +10,5 @@ class Insert_manager:
         return list(self.member_dict.keys())
 
     def save_lunch_menu(self, menu_name: str, member_name: str, dt: str):
-        member_id = member_dict[member_name]
-        lunch_menu = LunchMenu(member_name=member_name, member_id=member_id, dt=dt)
-
+        lunch_menu = LunchMenu(menu_name=menu_name, member_name=member_name, date=dt)
         self.db.insert_data(lunch_menu)

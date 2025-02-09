@@ -23,7 +23,8 @@ class Database:
         self.conn.commit()
 
     def insert_data(self, lunch_menu: LunchMenu):
-        data = (lunch_menu.menu_name, lunch_menu.member_id, lunch_menu.date)
+        members = self.get_member_dict()
+        data = (lunch_menu.menu_name, members[lunch_menu.member_name], lunch_menu.date)
         query = '''
         INSERT INTO lunch_menu (menu_name, member_id, dt)
         VALUES (%s, %s, %s)
