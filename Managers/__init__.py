@@ -5,7 +5,6 @@ from .statistics import Statistics_manager
 from .rank import Rank_manager
 from .preferred import Preferred_manager
 from .cost import Cost_manager
-from .trend import Trend_manager
 from .without import Without_manager
 
 __all__ = [
@@ -16,6 +15,5 @@ __all__ = [
     'Rank_manager',
     'Preferred_manager',
     'Cost_manager',
-    'Trend_manager',
     'Without_manager'
 ]
