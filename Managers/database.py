@@ -43,8 +43,9 @@ class Database:
             l.member_id is null
         '''
         self.execute_query(query)
+        results = self.cursor.fetchall()
 
-        return ', '.join([record[0] for record in self.cursor.fetchall()])
+        return ',  '.join([record[0] for record in results])
 
     def select_data(self) -> list:
         query = '''
@@ -62,14 +63,6 @@ class Database:
         lunch_menus = [LunchMenu(menu_name=row[1], member_name=row[2], date=row[3], id=row[0]) for row in results]
 
         return lunch_menus
-
-    # TODO
-    def delete_data(self):
-        query = f'DELETE INTO lunch_menu'
-
-    # TODO
-    def update_data(self):
-        query = f'UPDATE INTO lunch_menu'
 
     def get_member_dict(self) -> dict:
         query = '''
