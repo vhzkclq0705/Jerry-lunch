@@ -166,3 +166,4 @@ cython_debug/
 .streamlit/*
 secrets.toml
 **/.DS_Store
+**/.constants.py
