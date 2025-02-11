@@ -1,4 +1,4 @@
-from Managers import Database, API_manager
+from jerry_lunch.managers import Database, API_manager
 import datetime
 import streamlit as st
 

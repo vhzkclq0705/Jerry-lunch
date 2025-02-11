@@ -1,5 +1,5 @@
 import requests
-from src.jerry_lunch import constants as cons
+from jerry_lunch import constants as cons
 
 # API_manager
 class API_manager:

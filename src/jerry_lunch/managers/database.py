@@ -1,6 +1,6 @@
 import psycopg
-from config.db_config import db_config
-from Model.lunch_menu import LunchMenu
+from jerry_lunch.config.db_config import db_config
+from jerry_lunch.models import LunchMenu
 
 # Database
 class Database:

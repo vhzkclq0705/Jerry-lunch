@@ -1,4 +1,4 @@
-from Managers import Database, Statistics_manager
+from jerry_lunch.managers import Database, Statistics_manager
 import streamlit as st
 
 # --Managers--

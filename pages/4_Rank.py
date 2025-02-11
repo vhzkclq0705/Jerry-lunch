@@ -1,4 +1,4 @@
-from Managers import Database, Rank_manager
+from jerry_lunch.managers import Database, Rank_manager
 import streamlit as st
 
 # --Managers--

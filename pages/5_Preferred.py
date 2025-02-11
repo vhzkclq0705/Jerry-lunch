@@ -1,4 +1,4 @@
-from Managers import Database, Preferred_manager
+from jerry_lunch.managers import Database, Preferred_manager
 import streamlit as st
 
 # --Managers--
