@@ -1,26 +1,15 @@
 import psycopg
-from config.db_config import db_config
-from Model.lunch_menu import LunchMenu
+from psycopg.rows import dict_row
+from jerry_lunch.config.db_config import db_config
+from jerry_lunch.models import LunchMenu
 
 # Database
 class Database:
-    def __init__(self):
-        self.conn = psycopg.connect(**db_config)
-        self.cursor = self.conn.cursor()
-        self.lunch_menus = self.select_data()
-
-    def get_lunch_menus(self) -> list:
-        lunch_menus = self.select_data()
-        data = [vars(lunch_menu) for lunch_menu in lunch_menus]
-
-        return data
-
-    def execute_query(self, query, data=None):
-        if data:
-            self.cursor.execute(query, data)
-        else:
-            self.cursor.execute(query)
-        self.conn.commit()
+    def execute_query(self, query, data=None) -> list:
+        with psycopg.connect(**db_config, row_factory=dict_row) as conn:
+            cur = conn.execute(query)
+            row = cur.fetchall()
+            return row
 
     def insert_data(self, lunch_menu: LunchMenu):
         members = self.get_member_dict()
@@ -48,21 +37,9 @@ class Database:
         return ',  '.join([record[0] for record in results])
 
     def select_data(self) -> list:
-        query = '''
-        SELECT
-            l.id,
-            menu_name,
-            name,
-            dt
-        FROM lunch_menu l
-        JOIN member m ON l.member_id = m.id
-        '''
-        self.execute_query(query)
-
-        results = self.cursor.fetchall()
-        lunch_menus = [LunchMenu(menu_name=row[1], member_name=row[2], date=row[3], id=row[0]) for row in results]
-
-        return lunch_menus
+        query = "SELECT * FROM view_select_all"
+        data = self.execute_query(query)
+        return data
 
     def get_member_dict(self) -> dict:
         query = '''

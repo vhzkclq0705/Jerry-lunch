@@ -1,4 +1,4 @@
-from Model.lunch_menu import LunchMenu
+from jerry_lunch.models import LunchMenu
 
 # Insert_manager
 class Insert_manager:

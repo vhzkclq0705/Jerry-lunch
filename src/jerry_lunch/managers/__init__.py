@@ -6,6 +6,8 @@ from .rank import Rank_manager
 from .preferred import Preferred_manager
 from .cost import Cost_manager
 from .without import Without_manager
+from .api import API_manager
+from .sync import Sync_manager
 
 __all__ = [
     'Database',
@@ -15,5 +17,7 @@ __all__ = [
     'Rank_manager',
     'Preferred_manager',
     'Cost_manager',
-    'Without_manager'
+    'Without_manager',
+    'API_manager',
+    'Sync_manager'
 ]

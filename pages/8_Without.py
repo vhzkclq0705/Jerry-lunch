@@ -1,4 +1,4 @@
-from Managers import Database, Without_manager
+from jerry_lunch.managers import Database, Without_manager
 import streamlit as st
 
 # --Managers--
