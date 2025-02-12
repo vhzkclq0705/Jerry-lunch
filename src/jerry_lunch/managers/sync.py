@@ -1,8 +1,9 @@
-import pandas as pd
-import requests
 from .api import API_manager
 from .database import Database
 from jerry_lunch import constants as cons
+import pandas as pd
+import requests
+import streamlit as st
 
 # Sync_manager
 class Sync_manager:
@@ -17,7 +18,7 @@ class Sync_manager:
         df = pd.DataFrame(my_data)
         return df
                              
-    def get_data(self):
+    def get_data(self, progress_bar):
         cur_df = self.get_my_data()
         endpoints = self.get_endpoints()
         
@@ -25,7 +26,7 @@ class Sync_manager:
         total_data_cnt = 0
         duplicated_data_cnt = 0
         
-        for endpoint in endpoints:
+        for i, endpoint in enumerate(endpoints):
             response = requests.get(endpoint['url'], headers=self.headers)
             if response.status_code == 200:
                 success_cnt += 1
@@ -35,6 +36,8 @@ class Sync_manager:
                 
                 total_data_cnt += len(new_df)
                 duplicated_data_cnt += cnt
+            
+            progress_bar.progress((i + 1) / len(endpoints))
                 
         cur_df['dt'] = cur_df['dt'].astype(str)
         df = cur_df.sort_values(by='dt', ascending=False).reset_index(drop=True)
